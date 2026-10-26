@@ -1,0 +1,10 @@
+# Java build output
+*.class
+
+# Generated benchmark output
+results.csv
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store

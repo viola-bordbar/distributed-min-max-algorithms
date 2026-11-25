@@ -1,50 +1,59 @@
 # Distributed Min/Max Algorithms
 
-A Java project exploring how multiple processes can communicate to determine the global minimum and maximum of their individual values. It implements three communication strategies and includes a simple benchmarking mode to compare their execution times.
+A Java project exploring how multiple processes communicate to determine the global minimum and maximum of their individual values. The project implements three communication strategies and includes a benchmarking mode to compare their execution times.
 
-Developed as part of my Concurrent Programming coursework at KTH Royal Institute of Technology.
+Developed as part of the Concurrent Programming coursework at KTH Royal Institute of Technology.
 
-## Implemented algorithms
+## Implemented Algorithms
 
-- **Centralized:** One coordinator collects values from the other processes, determines the minimum and maximum, and sends the result back.
-- **Symmetric (all-to-all):** Every process sends its value to all other processes and computes the minimum and maximum locally.
-- **Ring:** Processes communicate in a logical ring. The first pass finds the global minimum and maximum; the second pass distributes the final result.
+- **Centralized:** One coordinator collects values from the other processes, determines the global minimum and maximum, and sends the results back to all processes.
+- **Symmetric (all-to-all):** Every process sends its value to all other processes and independently computes the global minimum and maximum.
+- **Ring:** Processes communicate in a logical ring. The first phase determines the global minimum and maximum, while the second phase distributes the results to all processes.
 
-## Technical concepts
+## Technical Concepts
 
-- Java processes and TCP socket communication (`Socket` and `ServerSocket`)
-- Coordination using a startup barrier
+- Inter-process communication using Java TCP sockets (`Socket` and `ServerSocket`)
+- Process coordination using a startup barrier
 - Distributed message passing and algorithm comparison
 - Execution-time benchmarking with CSV output
 
-## How to run
+## How to Run
 
-**Requirements:** A Java Development Kit (JDK) installed, with `javac` and `java` available in your terminal.
+**Requirements:** Java Development Kit (JDK) installed, with `javac` and `java` available in your terminal.
 
-Compile the program:
+### Compile
+
+From the project directory, compile the source file:
 
 ```bash
 javac ExchangingValues.java
 ```
 
-Run the default demonstration (four processes, one round, ring algorithm):
+### Run the default demonstration
 
 ```bash
 java ExchangingValues
 ```
 
-To try the centralized or symmetric algorithm, change the `launchProcesses(...)` call in the no-argument section of `main` to use `"centralized"` or `"symmetric"`, then recompile and run.
+The default configuration runs four processes, one round, using the ring algorithm.
 
-Run all built-in benchmark configurations:
+### Run a different algorithm
+
+To run the centralized or symmetric algorithm, change the `launchProcesses()` call in the no-argument section of `main()` to use `"centralized"` or `"symmetric"`, respectively. Recompile and run the program.
+
+### Run benchmarks
 
 ```bash
 java ExchangingValues test
 ```
 
-Benchmark results are written to `results.csv`, with columns for algorithm, number of processes, number of rounds, and execution time in milliseconds. The built-in test covers 2, 4, 6, and 8 processes, with 1, 2, and 3 rounds.
+The benchmark tests all three algorithms using 2, 4, 6 and 8 processes, with 1, 2 and 3 rounds.
 
-**Note:** The processes communicate over `localhost` on TCP ports starting at `5000`.
+Results are written to `results.csv`, containing the algorithm, number of processes, number of rounds and execution time in milliseconds.
 
-## Project scope
+**Note:** Processes communicate over `localhost` using TCP ports starting at `5000`.
 
-This repository contains the implementation of a university programming assignment. The focus is on comparing communication patterns and practicing inter-process communication, rather than providing a production-ready distributed systems library.
+## Project Scope
+
+This repository contains the implementation of a university programming assignment. The focus is on comparing communication patterns and practising inter-process communication, rather than providing a production-ready distributed systems library.
+
